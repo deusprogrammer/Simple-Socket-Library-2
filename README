@@ -1,0 +1,48 @@
+simSock Usage and README
+
+//SERVER EXAMPLE
+//A simple echo server that implements SSL
+#include "simSock.h"
+#include <stdio.h>
+
+int main() {
+   SSLTCPSocket *listener = new SSLTCPSocket(LISTENER);
+   SSLTCPSocket *client;
+   char buffer[1024];
+
+   listener->bind("8080");
+
+   while (client = listener->accept()) {
+      //Socket ready for read and write operations
+      client->read(buffer, 1024);
+      sprintf(buffer, "ECHO: %s\n", buffer);
+      client->write(buffer, 1024);
+      client->close();
+   }
+
+   return 0;
+}
+
+//CLIENT EXAMPLE
+//A simple echo server client that implements SSL
+#include "simSock.h"
+#include <stdio.h>
+
+int main() {
+   SSLTCPSocket *client = new SSLTCPSocket(CLIENT);
+   char buffer[1024] = "Hello";
+
+   client->connect("127.0.0.1", "8080");
+
+   client->write(buffer, 1024);
+   client->read(buffer, 1024);
+   client->close();
+
+   printf("%s\n", buffer);
+
+   return 0;
+}
+
+NOTE ON USING TCPSOCKET:
+
+   It works exactly the same as above.
