@@ -30,7 +30,7 @@ int main() {
    SSLTCPSocket *client = new SSLTCPSocket(CLIENT);
    char buffer[1024] = "Hello";
 
-   client->connect("127.0.0.1", "8080");
+   client->connect("127.0.0.1", "1337");
 
    client->write(buffer, 1024);
    client->read(buffer, 1024);
